@@ -1,20 +1,6 @@
-// JSX!
-// JSX => JAVA SCRIPT + XML
-// XML => Extended the HTML and Cratedad new Tag
-// App => <App />
+// SINGLE LINE JSX
 function App() {
-  return <h1>Hello</h1>;
+  return <h1>Hello World!!!</h1>;
 }
-
-/*function normalFn() {
-  // ..
-  // ..
-  // ..
-  return 100;
-  return "abcd"
-  return true;
-  return [];
-  return {};
-}*/
 
 export default App;
