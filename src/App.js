@@ -27,7 +27,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
-
-// [delhi, mumbai] => [<h1>delhi</h1>, <h1>mumbai</h1>]
