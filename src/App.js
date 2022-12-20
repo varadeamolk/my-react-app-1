@@ -17,8 +17,22 @@ function App() {
       children: [
         { path: "", element: <P1 /> },
         { path: "p1", element: <P1 /> },
-        { path: "p2", element: <P2 /> },
-        { path: "p3", element: <P3 /> },
+        {
+          path: "p2",
+          element: (
+            <ProtectedRoute>
+              <P2 />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "p3",
+          element: (
+            <ProtectedRoute>
+              <P3 />
+            </ProtectedRoute>
+          ),
+        },
         { path: "*", element: <h1>Not found</h1> },
       ],
     },
@@ -29,6 +43,15 @@ function App() {
       <RouterProvider router={router} />
     </>
   );
+}
+
+function ProtectedRoute({ children }) {
+  let login = localStorage.getItem("login");
+  if (!login) {
+    return <Navigate to="/" replace={true} />;
+  }
+
+  return children;
 }
 
 function AppNavLinks() {
