@@ -9,6 +9,7 @@ function App() {
     setTheme(theme);
   };
 
+  // VIEW
   return (
     <div>
       <div className="sticky-top">
