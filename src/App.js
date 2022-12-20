@@ -1,11 +1,12 @@
 import { useState } from "react";
 
 function App() {
-  let [message, setMessage] = useState("hello");
+  let [message, setMessage] = useState("Abc");
 
   let updateMessage = (e) => {
     // e.target == document.querySelector("input")
-    setMessage(e.target.value);
+    message = e.target.value;
+    setMessage(message);
   };
 
   return (
@@ -18,7 +19,6 @@ function App() {
         value={message}
         onChange={updateMessage}
       />
-      <input type="button" value="Add Message" />
 
       <h1>{message}</h1>
     </div>
