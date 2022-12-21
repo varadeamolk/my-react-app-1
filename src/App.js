@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 function App() {
   // Data Member
   let inputRef = useRef();
-  let [title] = useState("API DEMO");
+  let [title] = useState("Messaging App");
   let [message, setMessage] = useState("");
   let [messageList, setMessageList] = useState([]);
 
@@ -61,26 +61,38 @@ function App() {
 
   return (
     <div>
-      <h1>{title}</h1>
+      <h1 className="bg-dark text-light p-3">{title}</h1>
 
-      <input
-        type="text"
-        placeholder="Hi...whatsapp...!!"
-        value={message}
-        onChange={handleOnChangeMessage}
-        onKeyUp={checkEnterCode}
-        ref={inputRef} // document.querySelector()
-        required
-        minLength={2}
-      />
-      <input
-        type="button"
-        value="Make Ajax/API POST Call"
-        onClick={createNewMessage}
-      />
+      <div className="d-flex">
+        <input
+          className="form-control form-control-lg"
+          type="text"
+          placeholder="Hi...whatsapp...!!"
+          value={message}
+          onChange={handleOnChangeMessage}
+          onKeyUp={checkEnterCode}
+          ref={inputRef} // document.querySelector()
+          required
+          minLength={2}
+        />
+        <input
+          className="btn btn-secondary"
+          type="button"
+          value="Add"
+          onClick={createNewMessage}
+        />
+      </div>
 
       {messageList.map((item, index) => (
-        <div key={index}>{item.message}</div>
+        <div key={index} className="d-flex my-1">
+          <div className="badge text-bg-secondary">
+            {item.message}
+            <span className="ms-4">
+              {new Date(item.messageTime).getHours()}:
+              {new Date(item.messageTime).getMinutes()}
+            </span>
+          </div>
+        </div>
       ))}
     </div>
   );
