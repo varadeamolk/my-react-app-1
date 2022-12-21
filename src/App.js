@@ -27,12 +27,15 @@ function App() {
     let url = `http://localhost:3001/message`;
 
     let data = {
-      message: "Test Message",
+      message: "CDAC Message",
       messageTime: new Date(),
       reply: true,
     };
 
     await axios.post(url, data);
+
+    // To Refresh the content
+    getAllMessages();
   };
 
   return (
