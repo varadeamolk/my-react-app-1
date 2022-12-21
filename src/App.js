@@ -31,7 +31,7 @@ function App() {
     setMessageList(messageList);
   };
 
-  let createNewMessage = async () => {
+  let createNewMessage = async (reply) => {
     let url = `http://localhost:3001/message`;
     // console.log(inputRef.current);
     if (!inputRef.current.checkValidity()) {
@@ -42,7 +42,7 @@ function App() {
     let data = {
       message: message,
       messageTime: new Date(),
-      reply: true,
+      reply: reply,
     };
 
     await axios.post(url, data);
@@ -79,12 +79,25 @@ function App() {
           className="btn btn-secondary"
           type="button"
           value="Add"
-          onClick={createNewMessage}
+          onClick={() => createNewMessage(false)}
+        />
+        <input
+          className="btn btn-secondary"
+          type="button"
+          value="Reply"
+          onClick={() => createNewMessage(true)}
         />
       </div>
 
       {messageList.map((item, index) => (
-        <div key={index} className="d-flex my-1">
+        <div
+          key={index}
+          className={
+            item.reply
+              ? "d-flex justify-content-end my-1"
+              : "d-flex justify-content-start my-1"
+          }
+        >
           <div className="badge text-bg-secondary">
             {item.message}
             <span className="ms-4">
