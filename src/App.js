@@ -47,6 +47,12 @@ function App() {
     getAllMessages();
   };
 
+  let checkEnterCode = (e) => {
+    if (e.keyCode == 13) {
+      createNewMessage();
+    }
+  };
+
   return (
     <div>
       <h1>{title}</h1>
@@ -56,6 +62,7 @@ function App() {
         placeholder="Hi...whatsapp...!!"
         value={message}
         onChange={handleOnChangeMessage}
+        onKeyUp={checkEnterCode}
       />
       <input
         type="button"
