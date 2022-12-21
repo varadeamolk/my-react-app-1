@@ -41,6 +41,8 @@ function App() {
 
     await axios.post(url, data);
 
+    setMessage("");
+
     // To Refresh the content
     getAllMessages();
   };
