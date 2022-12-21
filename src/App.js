@@ -3,6 +3,22 @@ import { Link, Route, Routes } from "react-router-dom";
 function App() {
   return (
     <div>
+      <AppNavLinks />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/explore" element={<Explore />} />
+        <Route path="/notifications" element={<Notifications />} />
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </div>
+  );
+}
+
+function AppNavLinks() {
+  return (
+    <div>
       <Link to="/home" className="fs-4">
         Home |
       </Link>
@@ -12,22 +28,38 @@ function App() {
       <Link to="/notifications" className="fs-4">
         Notifications
       </Link>
+    </div>
+  );
+}
 
-      <Routes>
-        {/** http://localhost:3000/ */}
-        <Route path="/" element={<h1>Home</h1>} />
+function Home() {
+  return (
+    <div>
+      <h1>I am Home</h1>
+    </div>
+  );
+}
 
-        {/** http://localhost:3000/home */}
-        <Route path="/home" element={<h1>Home</h1>} />
+function Explore() {
+  return (
+    <div>
+      <h1>I am Explore</h1>
+    </div>
+  );
+}
 
-        {/** http://localhost:3000/explore */}
-        <Route path="/explore" element={<h1>Explore</h1>} />
+function Notifications() {
+  return (
+    <div>
+      <h1>I am Notifications</h1>
+    </div>
+  );
+}
 
-        {/** http://localhost:3000/notifications */}
-        <Route path="/notifications" element={<h1>Notifications</h1>} />
-
-        <Route path="*" element={<h1>Page Not Found</h1>} />
-      </Routes>
+function PageNotFound() {
+  return (
+    <div>
+      <h1>I am lost. I am not available!</h1>
     </div>
   );
 }
