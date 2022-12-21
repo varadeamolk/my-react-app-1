@@ -1,11 +1,18 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
+  // Data Member
   let [title] = useState("API DEMO");
   let [messageList, setMessageList] = useState([]);
 
-  // Funcns
+  // Spl Funcn :: Hook :: Like Constructor ::  Called while the Compoent is Initialized.
+  useEffect(() => {
+    // console.log("I AM GETTING CALLED");
+    getAllMessages();
+  }, []);
+
+  // Member Funcns
   let getAllMessages = async () => {
     let url = `http://localhost:3001/messages`;
     let response = await axios.get(url);
@@ -44,8 +51,8 @@ function App() {
         onClick={createNewMessage}
       />
 
-      {messageList.map((item) => (
-        <div>{item.message}</div>
+      {messageList.map((item, index) => (
+        <div key={index}>{item.message}</div>
       ))}
     </div>
   );
