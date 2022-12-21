@@ -1,56 +1,33 @@
+import axios from "axios";
 import { useState } from "react";
 
 function App() {
-  let [message, setMessage] = useState("Hello");
-  let [list, setList] = useState([
-    { message: "Hi", messageTime: new Date() },
-    { message: "How r u", messageTime: new Date() },
-    { message: "Good", messageTime: new Date() },
-    { message: "fine bro", messageTime: new Date() },
-  ]);
+  let [title] = useState("API DEMO");
+  let [messageList, setMessageList] = useState([]);
 
-  // Member fn
-  let updateInputMessage = (e) => {
-    message = e.target.value;
-    setMessage(message);
-  };
+  // Funcns
+  let getAllMessages = async () => {
+    let url = `http://localhost:3001/messages`;
+    let response = await axios.get(url);
+    // console.log(response);
 
-  let addMessage = () => {
-    // let newMessage = { message: "Chill bro...!", messageTime: new Date() };
-    let newMessage = { message: message, messageTime: new Date() };
-    list = [newMessage, ...list];
-    setList(list);
+    // Getting the Message From Server :: And re-rendering
+    messageList = [...response.data];
+    setMessageList(messageList);
   };
 
   return (
     <div>
-      <h1 className="bg-primary text-white p-3">Messaging Demo</h1>
+      <h1>{title}</h1>
 
-      <div className="d-flex">
-        <input
-          className="form-control"
-          value={message}
-          onChange={updateInputMessage}
-          type="text"
-          placeholder="Enter Message"
-        />
-        <input
-          className="btn btn-primary"
-          type="button"
-          value="Add Message"
-          onClick={addMessage}
-        />
-      </div>
+      <input
+        type="button"
+        value="Make Ajax/API Call"
+        onClick={getAllMessages}
+      />
 
-      {list.map((item, index) => (
-        <div key={index} className="d-flex my-1">
-          <div className="badge text-bg-primary">
-            {item.message}
-            <span className="ms-4">
-              {item.messageTime.getHours()}:{item.messageTime.getMinutes()}
-            </span>
-          </div>
-        </div>
+      {messageList.map((item) => (
+        <div>{item.message}</div>
       ))}
     </div>
   );
