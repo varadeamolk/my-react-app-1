@@ -1,120 +1,61 @@
-import axios from "axios";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 function App() {
-  // Data Member
-  let inputRef = useRef();
-  let [title] = useState("Messaging App");
-  let [message, setMessage] = useState("");
-  let [messageList, setMessageList] = useState([]);
-
-  // Spl Funcn :: Hook :: Like Constructor ::  Called while the Compoent is Initialized.
-  useEffect(() => {
-    // console.log("I AM GETTING CALLED");
-    getAllMessages();
-  }, []);
-
-  // Member Funcns
-  let handleOnChangeMessage = (e) => {
-    message = e.target.value;
-    setMessage(message);
-    // setMessage(e.target.value)
-  };
-
-  let getAllMessages = async () => {
-    let url = `http://localhost:3001/messages`;
-    let response = await axios.get(url);
-    // console.log(response);
-
-    // Getting the Message From Server :: And re-rendering
-    messageList = [...response.data];
-    setMessageList(messageList);
-  };
-
-  let createNewMessage = async (reply) => {
-    let url = `http://localhost:3001/message`;
-    // console.log(inputRef.current);
-    if (!inputRef.current.checkValidity()) {
-      alert("Invalid");
-      return;
-    }
-
-    let data = {
-      message: message,
-      messageTime: new Date(),
-      reply: reply,
-    };
-
-    await axios.post(url, data);
-
-    setMessage("");
-
-    // To Refresh the content
-    getAllMessages();
-  };
-
-  let checkEnterCode = (e) => {
-    if (e.keyCode == 13) {
-      createNewMessage();
-    }
-  };
-
   return (
     <div>
-      <h1 className="bg-dark text-light p-3 sticky-top">{title}</h1>
+      <AppHeader />
+      <AppBody />
+      <AppBody />
+      <AppFooter />
+    </div>
+  );
+}
 
-      <div className="row justify-content-center">
-        <div className="col-12 col-md-6">
-          <div className="d-flex">
-            <input
-              className="form-control form-control-lg"
-              type="text"
-              placeholder="Hi...whatsapp...!!"
-              value={message}
-              onChange={handleOnChangeMessage}
-              onKeyUp={checkEnterCode}
-              ref={inputRef} // document.querySelector()
-              required
-              minLength={2}
-            />
-            <input
-              className="btn btn-secondary"
-              type="button"
-              value="Add"
-              onClick={() => createNewMessage(false)}
-            />
-            <input
-              className="btn btn-secondary"
-              type="button"
-              value="Reply"
-              onClick={() => createNewMessage(true)}
-            />
-          </div>
-        </div>
-      </div>
+// <AppHeader />
+function AppHeader() {
+  return (
+    <div className="bg-dark text-light p-3">
+      <div className="fs-3">Shopping Book</div>
+    </div>
+  );
+}
 
-      {messageList.map((item, index) => (
-        <div className="row justify-content-center">
-          <div className="col-12 col-md-6 ">
-            <div
-              key={index}
-              className={
-                item.reply
-                  ? "d-flex justify-content-end my-1"
-                  : "d-flex justify-content-start my-1"
-              }
-            >
-              <div className="badge text-bg-secondary">
-                {item.message}
-                <span className="ms-4">
-                  {new Date(item.messageTime).getHours()}:
-                  {new Date(item.messageTime).getMinutes()}
-                </span>
-              </div>
+function AppBody() {
+  let [list] = useState([{}, {}, {}, {}, {}, {}, {}, {}]);
+
+  return (
+    <div className="row">
+      {list.map((item, index) => (
+        <div key={index} className="col-12 col-md-3 my-2">
+          <div className="card">
+            <img
+              src={`https://picsum.photos/${250 + index}`}
+              alt=""
+              style={{ height: "200px", objectFit: "cover" }}
+            />
+            <div className="card-header">Card Title</div>
+            <div className="card-body">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore
+              maxime quam atque vero molestias! Nulla, earum voluptatem culpa id
+              quis deserunt eveniet modi. Inventore excepturi eaque ex mollitia
+              deserunt exercitationem!
             </div>
           </div>
         </div>
       ))}
+    </div>
+  );
+}
+
+function AppFooter() {
+  return (
+    <div
+      className="bg-secondary d-flex flex-column justify-content-center align-items-center"
+      style={{ height: "400px" }}
+    >
+      <div className="text-light fs-4">Copy Right by Student Community!</div>
+      <div className="text-light fs-6">Follow Us @Twitter</div>
+      <div className="text-light fs-6"> Follow Us @Youtube</div>
     </div>
   );
 }
