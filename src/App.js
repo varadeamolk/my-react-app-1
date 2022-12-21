@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 function App() {
   // Data Member
   let [title] = useState("API DEMO");
+  let [message, setMessage] = useState("");
   let [messageList, setMessageList] = useState([]);
 
   // Spl Funcn :: Hook :: Like Constructor ::  Called while the Compoent is Initialized.
@@ -13,6 +14,12 @@ function App() {
   }, []);
 
   // Member Funcns
+  let handleOnChangeMessage = (e) => {
+    message = e.target.value;
+    setMessage(message);
+    // setMessage(e.target.value)
+  };
+
   let getAllMessages = async () => {
     let url = `http://localhost:3001/messages`;
     let response = await axios.get(url);
@@ -27,7 +34,7 @@ function App() {
     let url = `http://localhost:3001/message`;
 
     let data = {
-      message: "CDAC Message",
+      message: message,
       messageTime: new Date(),
       reply: true,
     };
@@ -43,11 +50,11 @@ function App() {
       <h1>{title}</h1>
 
       <input
-        type="button"
-        value="Make Ajax/API GET Call"
-        onClick={getAllMessages}
+        type="text"
+        placeholder="Hi...whatsapp...!!"
+        value={message}
+        onChange={handleOnChangeMessage}
       />
-
       <input
         type="button"
         value="Make Ajax/API POST Call"
