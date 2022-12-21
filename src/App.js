@@ -1,4 +1,9 @@
 import { Link, Route, Routes } from "react-router-dom";
+import AppNavLinks from "./components/AppNavLinks";
+import Explore from "./components/Explore";
+import Home from "./components/Home";
+import Notifications from "./components/Notifications";
+import PageNotFound from "./components/PageNotFound";
 
 function App() {
   return (
@@ -12,54 +17,6 @@ function App() {
         <Route path="/notifications" element={<Notifications />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
-    </div>
-  );
-}
-
-function AppNavLinks() {
-  return (
-    <div>
-      <Link to="/home" className="fs-4">
-        Home |
-      </Link>
-      <Link to="/explore" className="fs-4">
-        Explore |
-      </Link>
-      <Link to="/notifications" className="fs-4">
-        Notifications
-      </Link>
-    </div>
-  );
-}
-
-function Home() {
-  return (
-    <div>
-      <h1>I am Home</h1>
-    </div>
-  );
-}
-
-function Explore() {
-  return (
-    <div>
-      <h1>I am Explore</h1>
-    </div>
-  );
-}
-
-function Notifications() {
-  return (
-    <div>
-      <h1>I am Notifications</h1>
-    </div>
-  );
-}
-
-function PageNotFound() {
-  return (
-    <div>
-      <h1>I am lost. I am not available!</h1>
     </div>
   );
 }
