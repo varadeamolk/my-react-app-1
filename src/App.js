@@ -1,82 +1,74 @@
 import {
   createBrowserRouter,
-  Link,
   Outlet,
   RouterProvider,
-  useRouteError,
+  Link,
 } from "react-router-dom";
-import Home from "./components/Home";
-import Explore from "./components/Explore";
-import PageNotFound from "./components/PageNotFound";
-import DemoError from "./components/DemoError";
-import Notifications from "./components/Notifications";
-
-let router = createBrowserRouter([
-  {
-    path: "/",
-    element: <AppPageLayout />,
-    children: [
-      {
-        index: true,
-        element: <Home />,
-      },
-      {
-        path: "explore",
-        element: <Explore />,
-      },
-      {
-        path: "notifications",
-        element: <Notifications />,
-      },
-    ],
-  },
-
-  {
-    path: "/contactus",
-    element: <ContactUs />,
-  },
-
-  {
-    path: "/demoerr",
-    element: <DemoError />,
-    errorElement: <ErrorBoundary />,
-  },
-  {
-    path: "*",
-    element: <PageNotFound />,
-  },
-]);
-
-function AppPageLayout() {
-  return (
-    <>
-      <Link to="/">Home</Link>
-      <Link to="/explore">Explore</Link>
-      <Link to="/notifications">Notification</Link>
-
-      <div>
-        <Outlet />
-      </div>
-    </>
-  );
-}
 
 function App() {
+  let router = createBrowserRouter([
+    {
+      path: "/",
+      element: <RootLayout />,
+      children: [
+        { index: true, element: <Page1 /> },
+        { path: "page2", element: <Page2 /> },
+        { path: "page3", element: <Page3 /> },
+        { path: "login", element: <Login /> },
+      ],
+    },
+  ]);
   return <RouterProvider router={router} />;
 }
 
-function ContactUs() {
-  return <h1>Contact US</h1>;
-}
-
-function ErrorBoundary() {
-  let error = useRouteError();
-  console.log(error.message);
+function RootLayout() {
   return (
     <div>
-      <h1>Error!</h1>
-      <p>An Error occured!</p>
-      <p>{error.message}</p>
+      <Link to="/login" className="fs-3">
+        Login |
+      </Link>
+      <Link to="/" className="fs-3">
+        Page1 |
+      </Link>
+      <Link to="/page2" className="fs-3">
+        Page2 |
+      </Link>
+      <Link to="/page3" className="fs-3">
+        Page3
+      </Link>
+      <Outlet />
+    </div>
+  );
+}
+
+function Login() {
+  return (
+    <div>
+      <h1>Login</h1>
+    </div>
+  );
+}
+
+function Page1() {
+  return (
+    <div>
+      <h1>Page1</h1>
+    </div>
+  );
+}
+
+function Page2() {
+  return (
+    <div>
+      <h1>Page2</h1>
+    </div>
+  );
+}
+
+function Page3() {
+  return (
+    <div>
+      <h1>Page3</h1>
     </div>
   );
 }
