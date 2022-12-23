@@ -14,7 +14,14 @@ function App() {
       element: <RootLayout />,
       children: [
         { index: true, element: <Page1 /> },
-        { path: "login", element: <Login /> },
+        {
+          path: "login",
+          element: (
+            <UnProtectedRoute>
+              <Login />
+            </UnProtectedRoute>
+          ),
+        },
         {
           path: "page2",
           element: (
@@ -31,14 +38,6 @@ function App() {
             </ProtectedRoute>
           ),
         },
-        {
-          path: "logout",
-          element: (
-            <ProtectedRoute>
-              <Logout />
-            </ProtectedRoute>
-          ),
-        },
       ],
     },
   ]);
@@ -47,7 +46,15 @@ function App() {
 
 function ProtectedRoute({ children }) {
   if (!localStorage.getItem("jwt")) {
-    return <Navigate to={"/login"} />;
+    return <Navigate to={"/login"} replace={true} />;
+  }
+
+  return children;
+}
+
+function UnProtectedRoute({ children }) {
+  if (localStorage.getItem("jwt")) {
+    return <Navigate to={"/"} replace={true} />;
   }
 
   return children;
@@ -58,32 +65,33 @@ function RootLayout() {
 
   if (!jwt) {
     return (
-      <div>
+      <>
         <Link to="/login" className="fs-3">
           Login |
         </Link>
         <Link to="/" className="fs-3">
           Page1 |
         </Link>
+
+        <Outlet />
+      </>
+    );
+  } else {
+    return (
+      <div>
+        <Link to="/" className="fs-3">
+          Page1 |
+        </Link>
+        <Link to="/page2" className="fs-3">
+          Page2 |
+        </Link>
+        <Link to="/page3" className="fs-3">
+          Page3 |
+        </Link>
+
         <Outlet />
       </div>
     );
-  } else {
-    <div>
-      <Link to="/" className="fs-3">
-        Page1 |
-      </Link>
-      <Link to="/page2" className="fs-3">
-        Page2 |
-      </Link>
-      <Link to="/page3" className="fs-3">
-        Page3
-      </Link>
-      <Link to="/logout" className="fs-3">
-        Logout |
-      </Link>
-      <Outlet />
-    </div>;
   }
 }
 
@@ -91,29 +99,13 @@ function Login() {
   let navigate = useNavigate();
 
   let loginAction = () => {
-    localStorage.setItem("jwt", "123");
-    // navigate("/page1", { replace: true });
+    localStorage.setItem("jwt", "true");
     navigate(0);
   };
   return (
     <div>
       <h1>Login</h1>
       <input type="button" value="Login" onClick={loginAction} />
-    </div>
-  );
-}
-
-function Logout() {
-  let navigate = useNavigate();
-
-  let logoutAction = () => {
-    localStorage.clear();
-    navigate(0);
-  };
-  return (
-    <div>
-      <h1>Login</h1>
-      <input type="button" value="Login" onClick={logoutAction} />
     </div>
   );
 }
@@ -135,9 +127,16 @@ function Page2() {
 }
 
 function Page3() {
+  let navigate = useNavigate();
+
+  let logoutAction = () => {
+    localStorage.clear();
+    navigate(0);
+  };
   return (
     <div>
-      <h1>Page3</h1>
+      <h1>Logout</h1>
+      <input type="button" value="Logout" onClick={logoutAction} />
     </div>
   );
 }
