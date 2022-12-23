@@ -5,19 +5,27 @@ import {
   Link,
   Navigate,
   useNavigate,
+  useLoaderData,
 } from "react-router-dom";
+import axios from "axios";
 
 function App() {
   let router = createBrowserRouter([
     {
       path: "/",
       element: <RootLayout />,
+      loader: async () => {
+        return axios.get("https://jsonplaceholder.typicode.com/posts");
+      },
       children: [
         { index: true, element: <h1>Page1</h1> },
 
         {
           path: "page2",
-          element: <h1>Page2</h1>,
+          element: <Page2 />,
+          loader: async () => {
+            return axios.get("https://jsonplaceholder.typicode.com/posts");
+          },
         },
         {
           path: "page3",
@@ -26,7 +34,9 @@ function App() {
       ],
     },
   ]);
-  return <RouterProvider router={router} />;
+  return (
+    <RouterProvider router={router} fallbackElement={<h1>In Progress</h1>} />
+  );
 }
 
 function RootLayout() {
@@ -55,6 +65,9 @@ function Page1() {
 }
 
 function Page2() {
+  let data = useLoaderData();
+  console.log(data);
+
   return (
     <div>
       <h1>Page2</h1>
