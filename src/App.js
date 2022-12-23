@@ -1,22 +1,45 @@
-import { Link, Route, Routes } from "react-router-dom";
-import AppNavLinks from "./components/AppNavLinks";
-import Explore from "./components/Explore";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useRouteError,
+} from "react-router-dom";
 import Home from "./components/Home";
-import Notifications from "./components/Notifications";
+import Explore from "./components/Explore";
 import PageNotFound from "./components/PageNotFound";
+import DemoError from "./components/DemoError";
+
+let router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/explore",
+    element: <Explore />,
+  },
+  {
+    path: "/demoerr",
+    element: <DemoError />,
+    errorElement: <ErrorBoundary />,
+  },
+  {
+    path: "*",
+    element: <PageNotFound />,
+  },
+]);
 
 function App() {
+  return <RouterProvider router={router} />;
+}
+
+function ErrorBoundary() {
+  let error = useRouteError();
+  console.log(error.message);
   return (
     <div>
-      <AppNavLinks />
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/explore" element={<Explore />} />
-        <Route path="/notifications" element={<Notifications />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
+      <h1>Error!</h1>
+      <p>An Error occured!</p>
+      <p>{error.message}</p>
     </div>
   );
 }
