@@ -13,15 +13,15 @@ function App() {
       path: "/",
       element: <RootLayout />,
       children: [
-        { index: true, element: <Page1 /> },
+        { index: true, element: <h1>Page1</h1> },
 
         {
           path: "page2",
-          element: <Page2 />,
+          element: <h1>Page2</h1>,
         },
         {
           path: "page3",
-          element: <Page3 />,
+          element: <h1>Page3</h1>,
         },
       ],
     },
@@ -41,6 +41,7 @@ function RootLayout() {
       <Link to="/page3" className="fs-3">
         Page3 |
       </Link>
+      <Outlet />
     </>
   );
 }
